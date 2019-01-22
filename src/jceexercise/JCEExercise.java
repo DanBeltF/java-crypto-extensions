@@ -2,6 +2,7 @@ package jceexercise;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.logging.Level;
@@ -61,6 +62,11 @@ public class JCEExercise {
             byte[] byteDecryptedText = aesCipherForDecryption.doFinal(byteCipherText);
             String strDecyptedText = new String(byteDecryptedText);
             System.out.println("Decrypted Text message is: " + strDecyptedText);
+            
+            // Calculate its hash value using SHA1
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            byte[] hashCipherText = messageDigest.digest(byteCipherText);
+            System.out.println("The hash value using SHA1 is: " + new BASE64Encoder().encode(hashCipherText));
             
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException ex) {
             Logger.getLogger(JCEExercise.class.getName()).log(Level.SEVERE, "Invalid parameter -> ", ex);
